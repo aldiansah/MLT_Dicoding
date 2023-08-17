@@ -15,7 +15,7 @@ Industri perfilman dunia merupakan salah satu industri yang tidak terpengaruh de
 
 ### Solution statements
 Dataset yang digunakan hanya berisi tentang rating atau hasil penilaian pengguna dan genre film, maka solusi yang sangat tepat untuk masalah ini adalah dengan menggunakan *collaborative filtering*.
-[Collaborative Filtering](https://medium.com/@ranggaantok/bagaimana-sistem-rekomendasi-berkerja-e749dac64816): *collaborative filtering* adalah suatu konsep dimana opini dari pengguna lain yang ada digunakan untuk memprediksi item yang mungkin disukai/diminati oleh seorang pengguna.
+[Collaborative Filtering](https://medium.com/@ranggaantok/bagaimana-sistem-rekomendasi-berkerja-e749dac64816): *collaborative filtering* adalah suatu konsep dimana opini dari pengguna lain yang ada digunakan untuk memprediksi item yang mungkin disukai/diminati oleh seorang pengguna. Algoritma *Content Based Filtering* digunakan untuk merekomendasikan film berdasarkan aktivitas pengguna pada masa lalu, sedangkan algoritma *Collaborative Filtering* digunakan untuk merekomendasikan film berdasarkan rating yang paling tinggi
 Pada *collaborative filtering attribut* yang digunakan bukan konten tetapi *user behaviour*. contohnya saat merekomendasikan suatu item berdasarkan dari riwayat *rating* dari *user* tersebut maupun *user* lain.
 |       | User1 | User2 | User3 | User4 |
 |-------|-------|-------|-------|-------|
@@ -151,7 +151,51 @@ Untuk *data preparation* menggunakan beberapa cara. Ada 3 dataframe yang akan di
 
 
 ## Modeling
-Untuk proses pemodelan disini menggunakan teknik embedding. Dengan menggunakan Model [Neural Collaborative Filtering (NCF)](https://towardsdatascience.com/paper-review-neural-collaborative-filtering-explanation-implementation-ea3e031b7f96). Model Neural Collaborative Filtering (NCF) adalah jaringan saraf (neural network) yang menyediakan Collaborative Filtering berdasarkan umpan balik implisit. Secara khusus, ini memberikan rekomendasi produk berdasarkan interaksi pengguna dan item. Data pelatihan untuk model ini harus berisi urutan pasangan (ID pengguna, ID anime) yang menunjukkan bahwa pengguna yang ditentukan telah berinteraksi dengan item, misalnya, dengan memberi peringkat atau mengklik. NCF pertama kali dijelaskan oleh Xiangnan He, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu dan Tat-Seng Chua dalam makalah [Neural Collaborative Filtering](https://arxiv.org/abs/1708.05031).
+
+# Pembahasan Jenis Sistem Rekomendasi dan Algoritma yang Digunakan
+
+1. Content Based Filtering merupakan teknik dalam sistem rekomendasi yang menggunakan nilai fitur dalam data atau item sebagai dasar dalam pemberian rekomendasi. Metode ini akan mengekstrak informasi yang terdapat pada item kemudian membandingkannya dengan informasi item yang pernah dilihat atau disukai oleh *user*.
+
+Kelebihan Content Based Filtering:
+
+Model Content Based Filtering tidak memerlukan data pengguna lain, karena rekomendasi jenis ini diberikan berdasarkan data yang berasal oleh pengguna itu sendiri.
+Model Content Based Filtering dapat digunakan untuk mengetahui preferensi atau minat spesifik pengguna, dan dapat merekomendasikan item khusus yang mungkin sangat diminati oleh beberapa pengguna lain.
+Kekurangan Content Based Filtering:
+
+Pengembangan model Content Based Filtering memerlukan pengetahuan mengenai domain atau bidang terkait.
+Model Content Based Filtering hanya dapat membuat rekomendasi berdasarkan minat pengguna itu sendiri. Dengan kata lain, model memiliki kemampuan terbatas untuk memperluas minat pengguna tersebut.
+Dalam proyek ini, metode yang digunakan dalam pemberian rekomendasi dengan Content Based Filtering adalah kombinasi Term Frequency – Inverse Document Frequency (TF-IDF) dengan Cosine Similarity. TF-IDF berfungsi untuk memberikan pembobotan terhadap data, dan Cosine Similiarity digunakan untuk membandingkan kemiripan suatu data dengan data lainnya berdasarkan hasil pembobotan dari TF-IDF.
+
+1.1 Term Frequency – Inverse Document Frequency (TF-IDF)
+
+Algoritma Term Frequency – Inverse Document Frequency (TF-IDF) merupakan algoritma yang berasal dari bidang information retrieval, yang biasanya digunakan dalam perbandingan dokumen. Algoritma ini digunakan untuk menentukan bobot dari suatu kata (t) pada suatu dokumen (d) [8].
+
+Term Frequency (TF) merupakan bobot dari suatu kata (t) dalam dokumen (d), yang ditentukan dengan melihat jumlah kemunculan kata dalam suatu dokumen. Untuk mengurangi efek dari kata yang frekuensi kemunculannya terlalu tinggi, Inverse Document Frequency (IDF) dapat digunakan untuk mengurangi bobot dari kata dengan frekuensi kolektif (frekuensi total kemunculan kata di semua dokumen) yang tinggi. Oleh karena itu, semakin banyak frekuensi kemunculan kata, maka nilai bobot menjadi semakin rendah [8].
+
+Kelebihan TF-IDF:
+
+Komputasi bersifat mudah.
+Dapat dengan mudah mengekstrak kata-kata yang paling deskriptif dalam suatu dokumen
+Kekurangan TF-IDF:
+
+TF-IDF menghitung kesamaan dokumen secara langsung di word-count space, yang mungkin lambat jika jumlah kata unik sangat banyak.
+TF-IDF mengasumsikan bahwa jumlah kata yang berbeda memberikan pembukti kesamaan yang independen.
+TF-IDF tidak menggunakan kesamaan semantik antara kata-kata.
+
+2. Collaborative Filtering
+*Collaborative Filtering* merupakan teknik dalam sistem rekomendasi yang menggunakan opini atau rating dari pengguna lain untuk memprediksi suatu item yang mungkin merupakan preferensi dari pengguna tersebut. *Collaborative Filtering* dapat dibagi menjadi dua bagian, yaitu memory-based dan model-based. Teknik memory-based dapat dibagi menjadi dua jenis, yaitu: user-based dan item-based. Teknik model-based menggunakan metode seperti Matrix factorization, Neural network, dll untuk melatih model.
+
+Kelebihan *Collaborative Filtering*:
+
+Pengembangan model *Collaborative Filtering* tidak memerlukan pengetahuan mengenai domain atau bidang terkait
+Model *Collaborative Filtering* dapat membantu pengguna dalam menentukan minat baru sesuai dengan penilaian atau opini pengguna lain.
+Kekurangan *Collaborative Filtering*:
+
+Tidak dapat menangani item baru (cold start)
+Sulit untuk menyertakan fitur sampingan untuk kueri/item selain fitur penilaian.
+Kualitas rekomendasi dari sistem rekomendasi *Collaborative Filtering* bergantung pada opini pengguna lain terhadap suatu item. Opini atau rating pengguna lain dapat dianggap sebagai neighbor. Untuk meningkatkan kualitas rekomendasi sistem rekomendasi tersebut, upaya yang dapat dilakukan adalah dengan melakukan reduksi neighbor, yaitu memotong neighbor hingga ditemukan beberapa pengguna yang memiliki kesamaan (similiarity) tertinggi.
+
+Untuk proses pemodelan disini menggunakan teknik embedding. Model machine learning yang akan dibuat adalah model sistem rekomendasi Content Based Filtering dan Collaborative Filtering. Dengan menggunakan Model [Neural Collaborative Filtering (NCF)](https://towardsdatascience.com/paper-review-neural-collaborative-filtering-explanation-implementation-ea3e031b7f96). Model Neural Collaborative Filtering (NCF) adalah jaringan saraf (neural network) yang menyediakan Collaborative Filtering berdasarkan umpan balik implisit. Secara khusus, ini memberikan rekomendasi produk berdasarkan interaksi pengguna dan item. Data pelatihan untuk model ini harus berisi urutan pasangan (ID pengguna, ID anime) yang menunjukkan bahwa pengguna yang ditentukan telah berinteraksi dengan item, misalnya, dengan memberi peringkat atau mengklik. NCF pertama kali dijelaskan oleh Xiangnan He, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu dan Tat-Seng Chua dalam makalah [Neural Collaborative Filtering](https://arxiv.org/abs/1708.05031).
 
 Menampilkan item movie yang user ini disukai dan tidak sebelumnya
 
@@ -232,7 +276,7 @@ Di bawah ini adalah grafik mse yang dihasilkan dari proses training model yang t
 ![grafik mse](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/da06a763-37c6-4900-a41d-d95fb6ed0303)
 
 
-* [Precision](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Precision adalah tingkat ketepatan antara informasi yang diminta oleh pengguna dengan jawaban yang diberikan oleh sistem. Sedangkan recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Formula Presisi adalah Precision = TP/(TP+FP). Jika sudah mendapatkan nilai TP selanjutnya harus mencari nilai FP (false positive). Nilai Precision yang didapatkan dari proyek ini adalah 1.0000 ![image](https://www.mydatamodels.com/wp-content/uploads/2020/10/5.-Precision-formula.png)
+* [Precision](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Precision adalah tingkat ketepatan antara informasi yang diminta oleh pengguna dengan jawaban yang diberikan oleh sistem. Sedangkan recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Nilai Precision yang didapatkan dari proyek ini melalui model keras adalah 1.0000 ![image](https://www.mydatamodels.com/wp-content/uploads/2020/10/5.-Precision-formula.png)
 
 Di bawah ini adalah grafik precision yang dihasilkan dari proses training model yang telah buat.
 

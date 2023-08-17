@@ -168,9 +168,9 @@ Dalam proyek ini, metode yang digunakan dalam pemberian rekomendasi dengan Conte
 
 1.1 Term Frequency – Inverse Document Frequency (TF-IDF)
 
-Algoritma Term Frequency – Inverse Document Frequency (TF-IDF) merupakan algoritma yang berasal dari bidang information retrieval, yang biasanya digunakan dalam perbandingan dokumen. Algoritma ini digunakan untuk menentukan bobot dari suatu kata (t) pada suatu dokumen (d) [8].
+Algoritma Term Frequency – Inverse Document Frequency (TF-IDF) merupakan algoritma yang berasal dari bidang information retrieval, yang biasanya digunakan dalam perbandingan dokumen. Algoritma ini digunakan untuk menentukan bobot dari suatu kata (t) pada suatu dokumen (d).
 
-Term Frequency (TF) merupakan bobot dari suatu kata (t) dalam dokumen (d), yang ditentukan dengan melihat jumlah kemunculan kata dalam suatu dokumen. Untuk mengurangi efek dari kata yang frekuensi kemunculannya terlalu tinggi, Inverse Document Frequency (IDF) dapat digunakan untuk mengurangi bobot dari kata dengan frekuensi kolektif (frekuensi total kemunculan kata di semua dokumen) yang tinggi. Oleh karena itu, semakin banyak frekuensi kemunculan kata, maka nilai bobot menjadi semakin rendah [8].
+Term Frequency (TF) merupakan bobot dari suatu kata (t) dalam dokumen (d), yang ditentukan dengan melihat jumlah kemunculan kata dalam suatu dokumen. Untuk mengurangi efek dari kata yang frekuensi kemunculannya terlalu tinggi, Inverse Document Frequency (IDF) dapat digunakan untuk mengurangi bobot dari kata dengan frekuensi kolektif (frekuensi total kemunculan kata di semua dokumen) yang tinggi. Oleh karena itu, semakin banyak frekuensi kemunculan kata, maka nilai bobot menjadi semakin rendah.
 
 Kelebihan TF-IDF:
 
@@ -268,67 +268,26 @@ Gambar di bawah ini merupakan daftar 10 rekomendasi yang dihasilkan :
 ## Evaluation
 Untuk bagian Evaluasi, Hal pertama adalah menguji performa model ini dengan mean squared error (MSE), precision, dan recall. Menurut sumber dari internet, kedua metrik ini sangat cocok untuk mengukur performa model machine learning. Berikut adalah penjelasan dari setiap metrik :
 
-* [Mean Squared Error](https://www.khoiri.com/2020/12/pengertian-dan-cara-menghitung-mean-squared-error-mse.html): Mean Squared Error (MSE) mungkin adalah fungsi loss yang paling sederhana dan paling umum, sering diajarkan dalam kursus pengantar Machine Learning. Metode Mean Squared Error secara umum digunakan untuk mengecek estimasi berapa nilai kesalahan pada peramalan. Nilai Mean Squared Error yang rendah atau nilai mean squared error mendekati nol menunjukkan bahwa hasil peramalan sesuai dengan data aktual dan bisa dijadikan untuk perhitungan peramalan di periode mendatang. Metode Mean Squared Error biasanya digunakan untuk mengevaluasi metode pengukuran dengan model regressi atau model peramalan seperti Moving Average, Weighted Moving Average dan Analisis Trendline. Cara menghitung Mean Squared Error (MSE) adalah melakukan pengurangan nilai data aktual dengan data peramalan dan hasilnya dikuadratkan (squared) kemudian dijumlahkan secara keseluruhan dan membaginya dengan banyaknya data yang ada. Nilai MSE yang didapatkan dari proyek ini adalah 0.0083
+Dari hasil 10 rekomendasi di atas, diketahui bahwa Footloose (1984) termasuk ke dalam genre Drama. Dari 8 film yang direkomendasikan, 1 film memiliki genre Comedy|Romance (similar). Artinya, precision sistem kita sebesar 7/8 atau 87.5%.
 
+Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
+![image](https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/academy/dos:819311f78d87da1e0fd8660171fa58e620211012160253.png)
+
+* [Mean Squared Error](https://www.khoiri.com/2020/12/pengertian-dan-cara-menghitung-mean-squared-error-mse.html): Mean Squared Error (MSE) mungkin adalah fungsi loss yang paling sederhana dan paling umum, sering diajarkan dalam kursus pengantar Machine Learning. Metode Mean Squared Error secara umum digunakan untuk mengecek estimasi berapa nilai kesalahan pada peramalan. Nilai Mean Squared Error yang rendah atau nilai mean squared error mendekati nol menunjukkan bahwa hasil peramalan sesuai dengan data aktual dan bisa dijadikan untuk perhitungan peramalan di periode mendatang. Metode Mean Squared Error biasanya digunakan untuk mengevaluasi metode pengukuran dengan model regressi atau model peramalan seperti Moving Average, Weighted Moving Average dan Analisis Trendline. Cara menghitung Mean Squared Error (MSE) adalah melakukan pengurangan nilai data aktual dengan data peramalan dan hasilnya dikuadratkan (squared) kemudian dijumlahkan secara keseluruhan dan membaginya dengan banyaknya data yang ada. Nilai MSE yang didapatkan dari proyek ini adalah 0.0083
+  
+Rumus RMSE adalah sebagai berikut:
+
+`RMSE = sqrt((1/n) * Σ(yi - ŷi)^2)`
+
+Di sini:
+
+- n adalah jumlah data pengujian.
+- yi adalah nilai sebenarnya.
+- ŷi adalah nilai prediksi.
 
 Di bawah ini adalah grafik mse yang dihasilkan dari proses training model yang telah buat.
 
 ![grafik mse](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/da06a763-37c6-4900-a41d-d95fb6ed0303)
-
-
-* [Precision](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Precision adalah tingkat ketepatan antara informasi yang diminta oleh pengguna dengan jawaban yang diberikan oleh sistem. Sedangkan recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Nilai Precision yang didapatkan dari proyek ini melalui model keras adalah 1.0000.
-
-| Epoch 1/30                                                                                                                                                                                                 |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 27/27 [==============================] - 8s 241ms/step - loss: 0.7882 - mse: 0.1174 - precision: 0.9882 - recall: 0.5085 - val_loss: 0.6895 - val_mse: 0.0798 - val_precision: 0.9866 - val_recall: 0.6334 |
-| Epoch 2/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 121ms/step - loss: 0.6230 - mse: 0.0444 - precision: 1.0000 - recall: 0.5363 - val_loss: 0.6861 - val_mse: 0.0781 - val_precision: 0.9865 - val_recall: 0.7114 |
-| Epoch 3/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 124ms/step - loss: 0.5860 - mse: 0.0289 - precision: 1.0000 - recall: 0.5569 - val_loss: 0.6836 - val_mse: 0.0768 - val_precision: 0.9863 - val_recall: 0.7474 |
-| Epoch 4/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 6s 229ms/step - loss: 0.5745 - mse: 0.0242 - precision: 1.0000 - recall: 0.5738 - val_loss: 0.6815 - val_mse: 0.0758 - val_precision: 0.9863 - val_recall: 0.7679 |
-| Epoch 5/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 118ms/step - loss: 0.5659 - mse: 0.0208 - precision: 1.0000 - recall: 0.5890 - val_loss: 0.6797 - val_mse: 0.0749 - val_precision: 0.9863 - val_recall: 0.7768 |
-| Epoch 6/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 131ms/step - loss: 0.5616 - mse: 0.0190 - precision: 1.0000 - recall: 0.5908 - val_loss: 0.6785 - val_mse: 0.0743 - val_precision: 0.9863 - val_recall: 0.7746 |
-| Epoch 7/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 6s 218ms/step - loss: 0.5584 - mse: 0.0177 - precision: 1.0000 - recall: 0.6005 - val_loss: 0.6773 - val_mse: 0.0737 - val_precision: 0.9863 - val_recall: 0.7739 |
-| Epoch 8/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 113ms/step - loss: 0.5552 - mse: 0.0165 - precision: 1.0000 - recall: 0.6084 - val_loss: 0.6769 - val_mse: 0.0735 - val_precision: 0.9862 - val_recall: 0.7629 |
-| Epoch 9/30                                                                                                                                                                                                 |
-| 27/27 [==============================] - 3s 120ms/step - loss: 0.5542 - mse: 0.0162 - precision: 1.0000 - recall: 0.6192 - val_loss: 0.6764 - val_mse: 0.0733 - val_precision: 0.9862 - val_recall: 0.7580 |
-| Epoch 10/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 6s 218ms/step - loss: 0.5519 - mse: 0.0152 - precision: 1.0000 - recall: 0.6241 - val_loss: 0.6764 - val_mse: 0.0733 - val_precision: 0.9863 - val_recall: 0.7482 |
-| Epoch 11/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 125ms/step - loss: 0.5484 - mse: 0.0138 - precision: 1.0000 - recall: 0.6368 - val_loss: 0.6770 - val_mse: 0.0736 - val_precision: 0.9862 - val_recall: 0.7379 |
-| Epoch 12/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 112ms/step - loss: 0.5456 - mse: 0.0129 - precision: 1.0000 - recall: 0.6465 - val_loss: 0.6774 - val_mse: 0.0738 - val_precision: 0.9863 - val_recall: 0.7300 |
-| Epoch 13/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 4s 135ms/step - loss: 0.5429 - mse: 0.0118 - precision: 1.0000 - recall: 0.6568 - val_loss: 0.6775 - val_mse: 0.0738 - val_precision: 0.9862 - val_recall: 0.7289 |
-| Epoch 14/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 123ms/step - loss: 0.5403 - mse: 0.0108 - precision: 1.0000 - recall: 0.6659 - val_loss: 0.6776 - val_mse: 0.0739 - val_precision: 0.9863 - val_recall: 0.7274 |
-| Epoch 15/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 120ms/step - loss: 0.5385 - mse: 0.0101 - precision: 1.0000 - recall: 0.6683 - val_loss: 0.6771 - val_mse: 0.0736 - val_precision: 0.9863 - val_recall: 0.7320 |
-| Epoch 16/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 113ms/step - loss: 0.5366 - mse: 0.0095 - precision: 1.0000 - recall: 0.6701 - val_loss: 0.6763 - val_mse: 0.0732 - val_precision: 0.9863 - val_recall: 0.7401 |
-| Epoch 17/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 6s 217ms/step - loss: 0.5346 - mse: 0.0088 - precision: 1.0000 - recall: 0.6792 - val_loss: 0.6764 - val_mse: 0.0733 - val_precision: 0.9863 - val_recall: 0.7399 |
-| Epoch 18/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 120ms/step - loss: 0.5331 - mse: 0.0083 - precision: 1.0000 - recall: 0.6725 - val_loss: 0.6754 - val_mse: 0.0728 - val_precision: 0.9863 - val_recall: 0.7475 |
-| Epoch 19/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 121ms/step - loss: 0.5318 - mse: 0.0077 - precision: 1.0000 - recall: 0.6895 - val_loss: 0.6755 - val_mse: 0.0728 - val_precision: 0.9863 - val_recall: 0.7484 |
-| Epoch 20/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 6s 219ms/step - loss: 0.5309 - mse: 0.0075 - precision: 1.0000 - recall: 0.6883 - val_loss: 0.6735 - val_mse: 0.0718 - val_precision: 0.9863 - val_recall: 0.7639 |
-| Epoch 21/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 120ms/step - loss: 0.5286 - mse: 0.0067 - precision: 1.0000 - recall: 0.7064 - val_loss: 0.6731 - val_mse: 0.0716 - val_precision: 0.9863 - val_recall: 0.7681 |
-| Epoch 22/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 119ms/step - loss: 0.5276 - mse: 0.0064 - precision: 1.0000 - recall: 0.7034 - val_loss: 0.6719 - val_mse: 0.0710 - val_precision: 0.9863 - val_recall: 0.7776 |
-| Epoch 23/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 6s 218ms/step - loss: 0.5271 - mse: 0.0063 - precision: 1.0000 - recall: 0.7131 - val_loss: 0.6709 - val_mse: 0.0705 - val_precision: 0.9863 - val_recall: 0.7863 |
-| Epoch 24/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 119ms/step - loss: 0.5256 - mse: 0.0057 - precision: 1.0000 - recall: 0.7185 - val_loss: 0.6697 - val_mse: 0.0699 - val_precision: 0.9863 - val_recall: 0.7954 |
-| Epoch 25/30                                                                                                                                                                                                |
-| 27/27 [==============================] - 3s 113ms/step - loss: 0.5253 - mse: 0.0058 - precision: 1.0000 - recall: 0.7149 - val_loss: 0.6680 - val_mse: 0.0691 - val_precision: 0.9862 - val_recall: 0.8091 |
 
 Di bawah ini adalah grafik precision yang dihasilkan dari proses training model yang telah buat.
 

@@ -46,13 +46,19 @@ Untuk dataset sendiri diambil dari [Movie Lens Dataset](https://www.kaggle.com/a
     * timestamp : Kode waktu film
 
 Berikut adalah overview dari dataset tersebut setelah dijadikan dataframe:
-movie_df adalah isi dari dataset movies.csv. ![movie_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/3f5248ad-cd2d-4de2-a889-db82fbc82fff)
+movie_df adalah isi dari dataset movies.csv. 
+
+![movie_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/3f5248ad-cd2d-4de2-a889-db82fbc82fff)
 
 
-rating_df adalah isi dari dataset rating.csv yang sebelumnya telah dihilangkan kolom *timestamp* nya. ![rating_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/b1769750-4a34-4441-88c7-10ff385509ae)
+rating_df adalah isi dari dataset rating.csv yang sebelumnya telah dihilangkan kolom *timestamp* nya. 
+
+![rating_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/b1769750-4a34-4441-88c7-10ff385509ae)
 
 
-tags_df adalah isi dari dataset tags.csv.![tag_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/78b533e9-c1cd-420a-99b8-c084dc0876e5)
+tags_df adalah isi dari dataset tags.csv.
+
+![tag_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/78b533e9-c1cd-420a-99b8-c084dc0876e5)
 
 Cek informasi di setiap dataset
 

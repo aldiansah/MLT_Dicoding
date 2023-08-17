@@ -294,6 +294,7 @@ Di bawah ini adalah grafik precision yang dihasilkan dari proses training model 
 ![precision](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/ea42eb1f-78a9-4311-8fd9-64344af77f42)
 
 
+Dari visualisasi proses training model di atas, memperoleh nilai error akhir sebesar sekitar 1.0000
 * [Recall](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Nilai Recall yang didapatkan dari proyek ini adalah 0.6907
 
 Di bawah ini adalah grafik recall yang dihasilkan dari proses training model yang telah buat.

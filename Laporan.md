@@ -16,7 +16,7 @@ Industri perfilman dunia merupakan salah satu industri yang tidak terpengaruh de
 ### Solution statements
 Dataset yang digunakan hanya berisi tentang rating atau hasil penilaian pengguna dan genre film, maka solusi yang sangat tepat untuk masalah ini adalah dengan menggunakan *collaborative filtering*.
 [Collaborative Filtering](https://medium.com/@ranggaantok/bagaimana-sistem-rekomendasi-berkerja-e749dac64816): *collaborative filtering* adalah suatu konsep dimana opini dari pengguna lain yang ada digunakan untuk memprediksi item yang mungkin disukai/diminati oleh seorang pengguna.
-Pada *collaborative filtering attribut* yang digunakan bukan konten tetapi *user behaviour*. contohnya kita merekomendasikan suatu item berdasarkan dari riwayat *rating* dari *user* tersebut maupun *user* lain.
+Pada *collaborative filtering attribut* yang digunakan bukan konten tetapi *user behaviour*. contohnya saat merekomendasikan suatu item berdasarkan dari riwayat *rating* dari *user* tersebut maupun *user* lain.
 |       | User1 | User2 | User3 | User4 |
 |-------|-------|-------|-------|-------|
 | Film1 | 5     | 3     |       |       |
@@ -47,55 +47,141 @@ Untuk dataset sendiri diambil dari [Movie Lens Dataset](https://www.kaggle.com/a
 
 Berikut adalah overview dari dataset tersebut setelah dijadikan dataframe:
 movie_df adalah isi dari dataset movies.csv. 
-
-![movie_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/3f5248ad-cd2d-4de2-a889-db82fbc82fff)
+| movieId | title  | genres                                    |                                                 |
+|---------|--------|-------------------------------------------|-------------------------------------------------|
+| 0       | 1      | Toy Story (1995)                          | Adventure\|Animation\|Children\|Comedy\|Fantasy |
+| 1       | 2      | Jumanji (1995)                            | Adventure\|Children\|Fantasy                    |
+| 2       | 3      | Grumpier Old Men (1995)                   | Comedy\|Romance                                 |
+| 3       | 4      | Waiting to Exhale (1995)                  | Comedy\|Drama\|Romance                          |
+| 4       | 5      | Father of the Bride Part II (1995)        | Comedy                                          |
+| ...     | ...    | ...                                       | ...                                             |
+| 9737    | 193581 | Black Butler: Book of the Atlantic (2017) | Action\|Animation\|Comedy\|Fantasy              |
+| 9738    | 193583 | No Game No Life: Zero (2017)              | Animation\|Comedy\|Fantasy                      |
+| 9739    | 193585 | Flint (2017)                              | Drama                                           |
+| 9740    | 193587 | Bungo Stray Dogs: Dead Apple (2018)       | Action\|Animation                               |
+| 9741    | 193609 | Andrew Dice Clay: Dice Rules (1991)       | Comedy                                          |
 
 
 rating_df adalah isi dari dataset rating.csv yang sebelumnya telah dihilangkan kolom *timestamp* nya. 
 
-![rating_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/b1769750-4a34-4441-88c7-10ff385509ae)
-
+| userId | movieId | rating |     |
+|--------|---------|--------|-----|
+| 0      | 1       | 1      | 4.0 |
+| 1      | 1       | 3      | 4.0 |
+| 2      | 1       | 6      | 4.0 |
+| 3      | 1       | 47     | 5.0 |
+| 4      | 1       | 50     | 5.0 |
+| ...    | ...     | ...    | ... |
+| 100831 | 610     | 166534 | 4.0 |
+| 100832 | 610     | 168248 | 5.0 |
+| 100833 | 610     | 168250 | 5.0 |
+| 100834 | 610     | 168252 | 5.0 |
+| 100835 | 610     | 170875 | 3.0 |
 
 tags_df adalah isi dari dataset tags.csv.
 
-![tag_df](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/78b533e9-c1cd-420a-99b8-c084dc0876e5)
+| userId | movieId |    tag |        timestamp |            |
+|-------:|--------:|-------:|-----------------:|------------|
+|    0   |       2 |  60756 |            funny | 1445714994 |
+|    1   |       2 |  60756 |  Highly quotable | 1445714996 |
+|    2   |       2 |  60756 |     will ferrell | 1445714992 |
+|    3   |       2 |  89774 |     Boxing story | 1445715207 |
+|    4   |       2 |  89774 |              MMA | 1445715200 |
+|   ...  |     ... |    ... |              ... |        ... |
+|  3678  |     606 |   7382 |        for katie | 1171234019 |
+|  3679  |     606 |   7936 |          austere | 1173392334 |
+|  3680  |     610 |   3265 |           gun fu | 1493843984 |
+|  3681  |     610 |   3265 | heroic bloodshed | 1493843978 |
+|  3682  |     610 | 168248 | Heroic Bloodshed | 1493844270 |
 
 Cek informasi di setiap dataset
 
-![movie_df1](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/2ef8cd55-3b8a-4003-94da-e74ad92d0fbc)
+| #   Column   Non-Null Count  Dtype  |
+|-------------------------------------|
+| ---  ------   --------------  ----- |
+| 0   movieId  9742 non-null   int64  |
+| 1   title    9742 non-null   object |
+| 2   genres   9742 non-null   object |
 
 
-![rating_df1](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/d9a44eef-b0b0-40a2-bf7d-1836bfe07f83)
+| #   Column   Non-Null Count   Dtype   |
+|---------------------------------------|
+| ---  ------   --------------   -----  |
+| 0   userId   100836 non-null  int64   |
+| 1   movieId  100836 non-null  int64   |
+| 2   rating   100836 non-null  float64 |
 
 
-![tag_df1](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/5dfbfcdf-43a6-43f7-bce2-96f2a8da2787)
+| #   Column     Non-Null Count  Dtype  |
+|---------------------------------------|
+| ---  ------     --------------  ----- |
+| 0   userId     3683 non-null   int64  |
+| 1   movieId    3683 non-null   int64  |
+| 2   tag        3683 non-null   object |
+| 3   timestamp  3683 non-null   int64  |
 
 
 
 Cek data null Data null dapat membuat suatu hasil prediksi model menjadi tidak akurat. Cara untuk melihat apakah data ini mengandung null atau tidak adalah dengan menggunakan method dari library pandas yaitu isnull(). Berikut adalah hasil dari cek data null oleh pandas : 
 
-![movie_df isnull](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/9796f3bd-4741-4b6e-adfc-65a6813afec6)
+| movieId | 0 |
+|---------|---|
+| title   | 0 |
+| genres  | 0 |
+
+| userId  | 0 |
+|---------|---|
+| movieId | 0 |
+| rating  | 0 |
 
 
-![rating_df isnull](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/9abbdd6e-529b-42ab-a253-1c85eab73df9)
+| userId    | 0 |
+|-----------|---|
+| movieId   | 0 |
+| tag       | 0 |
+| timestamp | 0 |
 
-
-![tags_df isnull](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/b1053617-a467-4d10-99d9-86a435600da9)
 
 ## Data Preparation
 Untuk *data preparation* menggunakan beberapa cara. Ada 3 dataframe yang akan diperiksa dan siapkan yaitu movie_df, rating_df, dan tags_df. Berikut penjelasan beberapa teknik yang digunakan untuk data preparation:
 
 1. Removing missing value, tahapan ini diperlukan karena dengan tidak adanya missing value akan membuat performa dalam pembuatan model menjadi lebih baik. Tahapan ini dilakukan dengan code seperti berikut: dataframe.dropna(). Kode ini berfungsi untuk menghapuskan data yang memiliki null values di dalam row setiap data.
 
-2. Normalisasi yaitu untuk mengubah nilai kolom numerik dalam kumpulan data ke skala umum, tanpa mendistorsi perbedaan dalam rentang nilai. Proses normalisasi dilakukan dengan metode Min Max. Proses tersebut dilakukan dengan code seperti gambar di bawah ini : ![Normalisasi](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/466494da-73e7-48d0-b03b-852e38dfe50b)
+2. Normalisasi yaitu untuk mengubah nilai kolom numerik dalam kumpulan data ke skala umum, tanpa mendistorsi perbedaan dalam rentang nilai. Proses normalisasi dilakukan dengan metode Min Max. 
 
 
 ## Modeling
-Untuk proses pemodelan disini menggunakan teknik embedding. Saya menggunakan Model [Neural Collaborative Filtering (NCF)](https://towardsdatascience.com/paper-review-neural-collaborative-filtering-explanation-implementation-ea3e031b7f96). Model Neural Collaborative Filtering (NCF) adalah jaringan saraf (neural network) yang menyediakan Collaborative Filtering berdasarkan umpan balik implisit. Secara khusus, ini memberikan rekomendasi produk berdasarkan interaksi pengguna dan item. Data pelatihan untuk model ini harus berisi urutan pasangan (ID pengguna, ID anime) yang menunjukkan bahwa pengguna yang ditentukan telah berinteraksi dengan item, misalnya, dengan memberi peringkat atau mengklik. NCF pertama kali dijelaskan oleh Xiangnan He, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu dan Tat-Seng Chua dalam makalah [Neural Collaborative Filtering](https://arxiv.org/abs/1708.05031).
+Untuk proses pemodelan disini menggunakan teknik embedding. Dengan menggunakan Model [Neural Collaborative Filtering (NCF)](https://towardsdatascience.com/paper-review-neural-collaborative-filtering-explanation-implementation-ea3e031b7f96). Model Neural Collaborative Filtering (NCF) adalah jaringan saraf (neural network) yang menyediakan Collaborative Filtering berdasarkan umpan balik implisit. Secara khusus, ini memberikan rekomendasi produk berdasarkan interaksi pengguna dan item. Data pelatihan untuk model ini harus berisi urutan pasangan (ID pengguna, ID anime) yang menunjukkan bahwa pengguna yang ditentukan telah berinteraksi dengan item, misalnya, dengan memberi peringkat atau mengklik. NCF pertama kali dijelaskan oleh Xiangnan He, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu dan Tat-Seng Chua dalam makalah [Neural Collaborative Filtering](https://arxiv.org/abs/1708.05031).
 
 Menampilkan item movie yang user ini disukai dan tidak sebelumnya
 
-![item movie](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/b1f8ae00-440b-42f6-a949-74a2b14cd4fd)
+| User  | 175    |                                                |                         |
+|-------|--------|------------------------------------------------|-------------------------|
+|       | rating | title                                          | genres                  |
+| 91934 | 5.0    | Step Up (2006)                                 | Drama\|Romance          |
+| 91932 | 5.0    | Take the Lead (2006)                           | Drama                   |
+| 41344 | 5.0    | Chasing Liberty (2004)                         | Comedy\|Romance         |
+| 91918 | 5.0    | Raise Your Voice (2004)                        | Romance                 |
+| 91058 | 5.0    | Ice Princess (2005)                            | Children\|Comedy\|Drama |
+| 39514 | 5.0    | Goal! The Dream Begins (Goal!) (2005)          | Drama                   |
+| 63952 | 5.0    | Center Stage (2000)                            | Drama\|Musical          |
+| 71367 | 5.0    | Footloose (1984)                               | Drama                   |
+| 78029 | 4.5    | Pay It Forward (2000)                          | Drama                   |
+| 88137 | 4.5    | Cinderella Story, A (2004)                     | Comedy\|Romance         |
+| 78693 | 4.0    | Marie Antoinette (2006)                        | Drama\|Romance          |
+| 84348 | 4.0    | Step Up 2 the Streets (2008)                   | Drama\|Musical\|Romance |
+| 42139 | 4.0    | 27 Dresses (2008)                              | Comedy\|Romance         |
+| 40185 | 4.0    | Producers, The (1968)                          | Comedy                  |
+| 91910 | 3.5    | You Got Served (2004)                          | Drama\|Musical          |
+| 91914 | 3.5    | Raising Helen (2004)                           | Comedy\|Drama\|Romance  |
+| 41709 | 3.5    | Lot Like Love, A (2005)                        | Comedy\|Drama\|Romance  |
+| 91919 | 3.5    | Me and You and Everyone We Know (2005)         | Comedy\|Drama           |
+| 26682 | 3.5    | Secret Garden, The (1993)                      | Children\|Drama         |
+| 58092 | 0.5    | Mystery Science Theater 3000: The Movie (1996) | Comedy\|Sci-Fi          |
+| 91903 | 0.5    | Meteor (1979)                                  | Sci-Fi                  |
+| 91906 | 0.5    | Silent Running (1972)                          | Drama\|Sci-Fi           |
+| 91923 | 0.5    | Stay (2005)                                    | Thriller                |
+| 91927 | 0.5    | When a Stranger Calls (2006)                   | Horror\|Thriller        |
 
 
 Berikut merupakan langkah untuk mendapatkan list rekomendasi movie berdasarkan aktivitas user berdasarkan rate yang diberikan oleh user.
@@ -103,41 +189,59 @@ Berikut merupakan langkah untuk mendapatkan list rekomendasi movie berdasarkan a
 1. Mencari data film apa saja yang telah ditonton oleh *user* lalu memasukkannya ke dalam dataframe yang baru
 2. Lalu mencari rating terendah dari film
 3. Selanjutnya membuat top_movie_refference dengan mengurutkannya berdasarkan *rating* dari film.
-4. Setelah itu saya membuat dataframe baru (user_pref_df) berdasarkan dataframe utama (movie_df) dan melakukan seleksi yang mana data yang dimasukkan adalah film yang termasuk kedalam top_movie_refference
+4. Setelahnya membuat dataframe baru (user_pref_df) berdasarkan dataframe utama (movie_df) dan melakukan seleksi yang mana data yang dimasukkan adalah film yang termasuk kedalam top_movie_refference
 5. Dan selanjutnya menghitung rata-rata rating yang diberikan oleh user
 
-Gambar di bawah meupakan proses penerapan dari tahapan yang saya jelaskan di atas :
+Gambar di bawah meupakan proses penerapan dari tahapan yang dijelaskan di atas :
 
-![Rekomendasi](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/6f3645d6-d430-4993-b497-7314006aac4b)
+|   | similar_users |                                        similarity |
+|---|---------------|--------------------------------------------------:|
+| 0 | 100           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 1 | 382           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 2 | 424           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 3 | 478           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 4 | 524           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 5 | 302           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 6 | 498           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 7 | 476           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 8 | 161           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
+| 9 | 479           | [0.19105974, 0.19109485, 0.19133145, 0.1957566... |
 
 
 Gambar di bawah ini merupakan daftar 10 rekomendasi yang dihasilkan :
 
-![10 rekomendasi](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/cc7e2080-f5df-42cd-b18c-af4a3092fad4)
+|      | movieId | title                                 | genres                  |
+|------|---------|---------------------------------------|-------------------------|
+| 2684 | 3594    | Center Stage (2000)                   | Drama\|Musical          |
+| 2834 | 3791    | Footloose (1984)                      | Drama                   |
+| 4812 | 7169    | Chasing Liberty (2004)                | Comedy\|Romance         |
+| 5345 | 8911    | Raise Your Voice (2004)               | Romance                 |
+| 5829 | 32289   | Ice Princess (2005)                   | Children\|Comedy\|Drama |
+| 6023 | 38388   | Goal! The Dream Begins (Goal!) (2005) | Drama                   |
+| 6167 | 44613   | Take the Lead (2006)                  | Drama                   |
+| 6265 | 47382   | Step Up (2006)                        | Drama\|Romance          |
 
 ## Evaluation
-Untuk bagian Evaluasi, Saya menguji performa model ini dengan mean squared error (MSE), precision, dan recall. Menurut sumber yang saya temukan, kedua metrik ini sangat cocok untuk mengukur performa model machine learning. Berikut adalah penjelasan dari setiap metrik :
+Untuk bagian Evaluasi, Hal pertama adalah menguji performa model ini dengan mean squared error (MSE), precision, dan recall. Menurut sumber dari internet, kedua metrik ini sangat cocok untuk mengukur performa model machine learning. Berikut adalah penjelasan dari setiap metrik :
 
 * [Mean Squared Error](https://www.khoiri.com/2020/12/pengertian-dan-cara-menghitung-mean-squared-error-mse.html): Mean Squared Error (MSE) mungkin adalah fungsi loss yang paling sederhana dan paling umum, sering diajarkan dalam kursus pengantar Machine Learning. Metode Mean Squared Error secara umum digunakan untuk mengecek estimasi berapa nilai kesalahan pada peramalan. Nilai Mean Squared Error yang rendah atau nilai mean squared error mendekati nol menunjukkan bahwa hasil peramalan sesuai dengan data aktual dan bisa dijadikan untuk perhitungan peramalan di periode mendatang. Metode Mean Squared Error biasanya digunakan untuk mengevaluasi metode pengukuran dengan model regressi atau model peramalan seperti Moving Average, Weighted Moving Average dan Analisis Trendline. Cara menghitung Mean Squared Error (MSE) adalah melakukan pengurangan nilai data aktual dengan data peramalan dan hasilnya dikuadratkan (squared) kemudian dijumlahkan secara keseluruhan dan membaginya dengan banyaknya data yang ada. Nilai MSE yang didapatkan dari proyek ini adalah 0.0083
 
-![mse 1](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/68590b49-2558-4f71-b8bc-476325d8e34c)
 
-
-Di bawah ini adalah grafik mse yang dihasilkan dari proses training model yang saya buat.
+Di bawah ini adalah grafik mse yang dihasilkan dari proses training model yang telah buat.
 
 ![grafik mse](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/da06a763-37c6-4900-a41d-d95fb6ed0303)
 
 
-* [Precision](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Precision adalah tingkat ketepatan antara informasi yang diminta oleh pengguna dengan jawaban yang diberikan oleh sistem. Sedangkan recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Nilai Precision yang didapatkan dari proyek ini adalah 1.0000 ![image](https://www.mydatamodels.com/wp-content/uploads/2020/10/5.-Precision-formula.png)
+* [Precision](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Precision adalah tingkat ketepatan antara informasi yang diminta oleh pengguna dengan jawaban yang diberikan oleh sistem. Sedangkan recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Formula Presisi adalah Precision = TP/(TP+FP). Jika sudah mendapatkan nilai TP selanjutnya harus mencari nilai FP (false positive). Nilai Precision yang didapatkan dari proyek ini adalah 1.0000 ![image](https://www.mydatamodels.com/wp-content/uploads/2020/10/5.-Precision-formula.png)
 
-Di bawah ini adalah grafik precision yang dihasilkan dari proses training model yang saya buat.
+Di bawah ini adalah grafik precision yang dihasilkan dari proses training model yang telah buat.
 
 ![precision](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/ea42eb1f-78a9-4311-8fd9-64344af77f42)
 
 
 * [Recall](https://dataq.wordpress.com/2013/06/16/perbedaan-precision-recall-accuracy/) : Recall adalah tingkat keberhasilan sistem dalam menemukan kembali sebuah informasi. Nilai Recall yang didapatkan dari proyek ini adalah 0.6907
 
-Di bawah ini adalah grafik recall yang dihasilkan dari proses training model yang saya buat.
+Di bawah ini adalah grafik recall yang dihasilkan dari proses training model yang telah buat.
 
 ![recal](https://github.com/aldiansah/MLT_Dicoding/assets/41302881/124fe67d-e1df-4e61-9a6a-ab62634fb45c)
 
